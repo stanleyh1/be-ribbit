@@ -1,7 +1,8 @@
-const db = require('../');
+const db = require('../connection.js');
 const format = require('pg-format');
 const articles = require('../data/development-data/articles');
-const utils = require('./utils.js');
+const { mapTopics, mapComments, mapUsers, mapArticles } = require('../utils/utils.js');
+
 
 const seed = (data) => {
   const { articleData, commentData, topicData, userData } = data;
@@ -14,21 +15,21 @@ const seed = (data) => {
     return db.query('DROP TABLE IF EXISTS articles;')
   })
   .then(() => {
-    return db.query('DROP TABLE IF EXISTS users')
+    return db.query('DROP TABLE IF EXISTS users;')
   })
   .then(() => {
-    return db.query('DROP TABLE IF EXISTS topics')
+    return db.query('DROP TABLE IF EXISTS topics;')
   })
   .then(() => {
     return db.query(`
     CREATE TABLE topics (
-      slug VARCHAR PRIMARY KEY NOT NULL,
-      description TEXT NOT NULL,
+      slug VARCHAR PRIMARY KEY,
+      description TEXT NOT NULL
     );`)
   })
   .then(() => {
     return db.query(`CREATE TABLE users (
-      username VARCHAR PRIMARY KEY NOT NULL,
+      username VARCHAR PRIMARY KEY,
       avatar_url VARCHAR,
       name VARCHAR NOT NULL
     );`)
@@ -39,9 +40,9 @@ const seed = (data) => {
       title VARCHAR NOT NULL,
       body TEXT NOT NULL,
       votes INT DEFAULT 0,
-      topic VARCHAR REFERENCES topics(slugs) NOT NULL,
-      author VARCHAR REFERENCES users(username) NOT NULL,
-      created_at CURRENT-TIMESTAMP
+      topic VARCHAR REFERENCES topics(slug),
+      author VARCHAR REFERENCES users(username),
+      created_at TIMESTAMP DEFAULT NOW()
     );`)
   })
   .then(() => {
@@ -49,40 +50,46 @@ const seed = (data) => {
       comment_id SERIAL PRIMARY KEY,
       author VARCHAR REFERENCES users(username),
       article_id INT REFERENCES articles(article_id),
-      votes INT DEFAULTS 0,
-      created_at CURRENT-TIMESTAMP,
-      body TEXT
+      votes INT DEFAULT 0,
+      created_at TIMESTAMP DEFAULT NOW(),
+      body TEXT NOT NULL
     );`)
   })
   .then(() => {
+    const topicValues = mapTopics(topicData)
     return db.query(
       format(
-        `INSERT INTO topics(username, avatar, name) VALUES %L RETURNING *;`,
-        mapTopics
+        `INSERT INTO topics(slug, description) VALUES %L RETURNING *;`,
+        topicValues
       )
     )
   })
   .then(() => {
+    const userValues = mapUsers(userData)
     return db.query(
       format(
         `INSERT INTO users(username, avatar_url, name) VALUES %L RETURNING *;`,
-      mapUsers
+      userValues
       )
     )
   })
   .then(() => {
+    const articleValues = mapArticles(articleData)
+    
     return db.query(
       format(
         `INSERT INTO articles(title, body, votes, topic, author, created_at) VALUES %L RETURNING *;`,
-        mapArticles
+        articleValues
       )
     )
   })
   .then(() => {
+    const commentValues = mapComments(commentData)
+    console.log(commentValues[0])
     return db.query(
       format(
         `INSERT INTO comments(author,article_id, votes, created_at, body) VALUES %L RETURNING *;`,
-        mapComments
+        commentValues
       )
     )
   })
