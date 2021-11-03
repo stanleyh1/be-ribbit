@@ -85,7 +85,6 @@ const seed = (data) => {
   })
   .then(() => {
     const commentValues = mapComments(commentData)
-    console.log(commentValues[0])
     return db.query(
       format(
         `INSERT INTO comments(author,article_id, votes, created_at, body) VALUES %L RETURNING *;`,
