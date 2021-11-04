@@ -16,7 +16,35 @@ exports.fetchArticlesById = (article_id) => {
     });
 };
 
+exports.updateArticleById = (article_id, updatedArticle) => {
+    const { body } = updatedArticle;
+    return db
+    .query('UPDATE articles SET body = $1 WHERE article_id = $2 RETURNING*;', [body, article_id])
+    .then(({rows}) => {
+        return rows[0];
+    })
+}
 
 
+// exports.insertArticle = (newArticle) => {
+//     const { title, topic, body } = newArticle;
+
+//     return db
+//     .query('INSERT INTO articles (title, topic, body ) VALUES ($1, $2, $3) RETURNING *;', [title, topic, body])
+//     .then(({ rows }) => {
+//         return rows[0];
+//     })
+// }
+
+exports.insertComment = (newComment) => {
+    
+    const { author, article_id, body} = newComment;
+
+    return db
+    .query('INSERT INTO comments (...) VALUES ($1, $2, $3) RETURNING *;', [author, article_id, body])
+    .then(({ rows }) => {
+        return rows[0];
+    })
+}
 
 
