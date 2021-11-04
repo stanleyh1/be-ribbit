@@ -1,4 +1,4 @@
-const { fetchTopics, fetchArticlesById, updateArticleById, insertArticle } = require('../models/news.models.js')
+const { fetchTopics, fetchArticlesById, updateArticleById, insertComment } = require('../models/news.models.js')
 
 
 exports.getTopics = (req, res) => {
