@@ -7,6 +7,7 @@ const app = require('../app')
 beforeEach(() => seed(testData));
 afterAll(() => db.end());
 
+
 describe('/api/topics', () => {
     describe('GET', () => {
         test('status:200, responds with an object of all topics', () => {
@@ -27,7 +28,17 @@ describe('/api/topics', () => {
                 });
             })
         })
+        test('status:404, responds with message Path not found', () => {
+            return request(app).get('/api/topic').expect(404).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Path not found"
+                })
+            }) 
+        })
     })
+})
+
+describe('/api/articles', () => { 
     describe('GET', () => {
         it('returns article by article id', () => {
             const article_id = 1;
@@ -71,25 +82,6 @@ describe('/api/topics', () => {
             });
         });
     });
-    // describe('POST', () => {
-    //     test('status:201, responds with a newly created articles table with a new article added', () => {
-    //         const newArticle = {
-    //             title: 'How to own a cat and keep things on the mantlepiece',
-    //             topic: 'cats',
-    //             body: 'You can\'t do it. Cats hate you and don\'t want you to have a peaceful existence'
-    //             }
-    //         return request(app).post('/api/articles').send(newArticle).expect(201).then(({body}) => {
-    //             expect(body.article).toEqual({article_id: expect.any(Number), 
-    //             title: 'How to own a cat and keep things on the mantlepiece',
-    //             topic: 'cats',
-    //             author: expect.any(String),
-    //             body: 'You can\'t do it. Cats hate you and don\'t want you to have a peaceful existence',
-    //             created_at: expect.any(String),
-    //             votes: 0,
-    //             });
-    //         });
-    //     });
-    // });
     describe('POST', () => {
         test('status:201, responds with a newly created comment', () => {
             const newComment = {
@@ -111,4 +103,50 @@ describe('/api/topics', () => {
             })
         })
     })
+    describe('GET', () => {
+        test('status:200, responds with an object of all articles', () => {
+            return request(app)
+            .get('/api/articles')
+            .expect(200)
+            .then(({body}) => {
+                const { articles } = body;
+                expect(articles).toBeInstanceOf(Array);
+                expect(articles).toHaveLength(12);
+                articles.forEach((article) => {
+                expect(article).toEqual(
+                expect.objectContaining({
+                    title: expect.any(String),
+                    topic: expect.any(String),
+                    author: expect.any(String),
+                    body: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number)
+                })
+                );
+                });
+            })
+        })
+    })
+//     describe('GET', () => {
+//         it('returns comments by article id', () => {
+//             const article_id = 1;
+//             return request(app).get(`/api/articles/${article_id}/comments`).expect(200).then(({ body }) => {
+//                 const { comments } = body;
+//                 expect(comments).toBeInstanceOf(Array);
+//                 expect(comments).toHaveLength(18);
+//                 comments.forEach((comment) => {
+//                 expect(comment).toEqual(
+//                 expect.objectContaining({
+//                     body: expect.any(String),
+//                     votes: expect.any(Number),
+//                     author: expect.any(String),
+//                     article_id: expect.any(Number),
+//                     created_at: expect.any(String)
+//                 })
+//                 )
+//             })
+//             })
+//         })
+//     })
+// 
 });

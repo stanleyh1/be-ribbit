@@ -4,8 +4,10 @@ exports.fetchTopics = () => {
     return db
     .query("SELECT * FROM topics;")
     .then(({ rows }) => {
-        return rows;
+        const topics = rows;
+        return topics;
     });
+
 };
 
 exports.fetchArticlesById = (article_id) => {
@@ -26,16 +28,6 @@ exports.updateArticleById = (article_id, updatedArticle) => {
 }
 
 
-// exports.insertArticle = (newArticle) => {
-//     const { title, topic, body } = newArticle;
-
-//     return db
-//     .query('INSERT INTO articles (title, topic, body ) VALUES ($1, $2, $3) RETURNING *;', [title, topic, body])
-//     .then(({ rows }) => {
-//         return rows[0];
-//     })
-// }
-
 exports.insertComment = (newComment) => {
     
     const { author, article_id, body} = newComment;
@@ -47,4 +39,19 @@ exports.insertComment = (newComment) => {
     })
 }
 
+exports.fetchArticles = () => {
+    return db
+    .query("SELECT * FROM articles;")
+    .then(({ rows }) => {
+        return rows;
+    });
+};
+
+// exports.fetchCommentsByArticleId = (article_id) => {
+//     return db
+//     .query('SELECT * FROM comments WHERE article_id = $1;', [article_id])
+//     .then(({ rows }) => {
+//         return rows;
+//     });
+// };
 

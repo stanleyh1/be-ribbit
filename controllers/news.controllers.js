@@ -1,14 +1,12 @@
-const { fetchTopics, fetchArticlesById, updateArticleById, insertComment } = require('../models/news.models.js')
+const { fetchTopics, fetchArticlesById, updateArticleById, insertComment, fetchArticles } = require('../models/news.models.js')
 
 
-exports.getTopics = (req, res) => {
-    fetchTopics()
+exports.getTopics = (req, res, next) => {
+        fetchTopics()
     .then((topics) => {
         res.status(200).send({ topics });
     })
-    .catch((err) => {
-        next()
-    })
+    .catch(next)
 };
 
 
@@ -35,21 +33,6 @@ exports.updateArticle = (req, res) => {
     }
 }
 
-// exports.postArticle = (req, res, next) => {
-    
-//     const newArticle = req.body;
-//     console.log(req.body)
-//     insertArticle(newArticle) 
-//     .then((article) => {
-//         res.status(201).send({ article });
-//     })
-//     .catch((err) => {
-//         console.log(err)
-//         next(err)
-//     })
-    
-// }
-
 exports.postComment = (req, res, next) => {
     
     const newComment = req.body;
@@ -63,3 +46,22 @@ exports.postComment = (req, res, next) => {
     })
     
 }
+
+exports.getArticles = (req, res) => {
+    fetchArticles()
+    .then((articles) => {
+        res.status(200).send({ articles });
+    })
+    .catch((err) => {
+        next()
+    })
+};
+
+// exports.getCommentsByArticleId = (req, res) => {
+//     const { article_id } = req.params;
+//     console.log(article_id)
+//     fetchCommentsByArticleId()
+//     .then((comments) => {
+//         res.status(200).send({ comments })
+//     })
+// }
