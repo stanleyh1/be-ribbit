@@ -58,6 +58,21 @@ describe('/api/articles', () => {
                 
             })
         })
+            test('status:404, responds with message Path not found', () => {
+                const article_id = 1;
+                return request(app).get(`/api/articl/${article_id}`).expect(404).then(({body}) => {
+                    expect(body).toEqual({
+                    "message": "Path not found"
+                    })
+                }) 
+            })
+            test('status:404, responds with message Path not found for an invalid ID', () => {;
+                return request(app).get(`/api/articles/99999999`).expect(404).then(({body}) => {
+                    expect(body).toEqual({
+                    "message": "Path not found"
+                    })
+                }) 
+            })
     })
     describe('PATCH', () => {
         it('status:200, responds with the updated article', () => {
@@ -81,6 +96,20 @@ describe('/api/articles', () => {
             });
             });
         });
+        test('status:404, responds with message Path not found', () => {
+            return request(app).get('/api/art/1').expect(404).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Path not found"
+                })
+            }) 
+        })
+        test('status:404, responds with message Path not found for an invalid ID', () => {
+            return request(app).get(`/api/articles/99999999999`).expect(404).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Path not found"
+                })
+            }) 
+        })
     });
     describe('POST', () => {
         test('status:201, responds with a newly created comment', () => {
@@ -101,6 +130,20 @@ describe('/api/articles', () => {
                 body: "Horses are not made of meat"
                 })
             })
+        })
+        test('status:404, responds with message Path not found', () => {
+            return request(app).get('/api/art/1').expect(404).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Path not found"
+                })
+            }) 
+        })
+        test('status:404, responds with message Path not found for an invalid ID', () => {
+            return request(app).get(`/api/articles/9999999/comments`).expect(404).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Path not found"
+                })
+            }) 
         })
     })
     describe('GET', () => {
@@ -126,27 +169,51 @@ describe('/api/articles', () => {
                 });
             })
         })
+        test('status:404, responds with message Path not found', () => {
+            return request(app).get('/api/artic').expect(404).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Path not found"
+                })
+            }) 
+        })
     })
-//     describe('GET', () => {
-//         it('returns comments by article id', () => {
-//             const article_id = 1;
-//             return request(app).get(`/api/articles/${article_id}/comments`).expect(200).then(({ body }) => {
-//                 const { comments } = body;
-//                 expect(comments).toBeInstanceOf(Array);
-//                 expect(comments).toHaveLength(18);
-//                 comments.forEach((comment) => {
-//                 expect(comment).toEqual(
-//                 expect.objectContaining({
-//                     body: expect.any(String),
-//                     votes: expect.any(Number),
-//                     author: expect.any(String),
-//                     article_id: expect.any(Number),
-//                     created_at: expect.any(String)
-//                 })
-//                 )
-//             })
-//             })
-//         })
-//     })
-// 
+    // describe('GET', () => {
+    //     it('returns all comments by article id', () => {
+    //         return request(app).get(`/api/articles/1/comments`).expect(200).then(({ body }) => {
+    //             const { comments }  = body;
+    //             expect(comments).toBeInstanceOf(Array);
+    //             expect(comments).toHaveLength(11);
+    //             comments.forEach((comment) => {
+    //             expect(comment).toEqual(
+    //             expect.objectContaining({
+    //             comment_id: expect.any(Number),
+    //             author: expect.any(String),
+    //             article_id: expect.any(Number),
+    //             votes: expect.any(Number),
+    //             created_at: expect.any(String),
+    //             body: expect.any(String)
+    //             }))
+    //         });
+    //         });
+    //     });
+    // });
+
 });
+
+describe('/api/comments', () => { 
+    describe('DELETE', () => {
+        test('status 204 No Content status when comment is deleted by comment ID', () => {
+            return request(app).delete('/api/comments/1').expect(204);
+        });
+        test('status:404, responds with message Path not found', () => {
+            return request(app).get('/api/comms/1').expect(404).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Path not found"
+                })
+            }) 
+        });
+    });
+});
+
+
+
