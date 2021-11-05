@@ -9,11 +9,15 @@ exports.fetchTopics = () => {
 };
 
 exports.fetchArticlesById = (article_id) => {
+    if ({ rows } < 1) { return Promise.reject({ status: 404, msg: 'Path not found' }); 
+    }
+    else {
     return db
     .query('SELECT * FROM articles WHERE article_id = $1;', [article_id])
     .then(({ rows }) => {
         return rows[0];
     });
+    };
 };
 
 exports.updateArticleById = (article_id, updatedArticle) => {
@@ -50,11 +54,5 @@ exports.deleteCommentById = (comment_id) => {
     .query('DELETE FROM comments WHERE comment_id = $1 RETURNING *;', [comment_id])
 }
 
-// exports.fetchCommentsByArticleId = (article_id) => {
-//     return db
-//     .query('SELECT * FROM comments WHERE article_id = $1;', [article_id])
-//     .then(({ rows }) => {
-//         return rows;
-//     })
-// }
+
 

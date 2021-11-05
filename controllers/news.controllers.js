@@ -42,10 +42,7 @@ exports.postComment = (req, res, next) => {
     .then((comment) => {
         res.status(201).send({ comment })
     })
-    .catch((err) => {
-        console.log(err)
-        next(err)
-    })
+    .catch(next)
     
 }
 
@@ -65,13 +62,4 @@ exports.deleteComment = (req, res, next) => {
     .catch(next)
 };
 
-// exports.getCommentsByArticleId = (req, res, next) => {
-//     console.log(req.params, 'req.params!')
-//     const { article_id } = req.params;
-//     fetchCommentsByArticleId(article_id)
-//     .then((comments) => {
-//         res.status(200).send({ comments })
-//     })
-//     .catch(next)
-// }
 

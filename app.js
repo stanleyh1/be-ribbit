@@ -20,7 +20,6 @@ app.delete('/api/comments/:comment_id', deleteComment)
 
 app.all('/*', handleInvalidPaths, handleInvalidIds)
 
-// app.get('/api/articles/:article_id/comments', getCommentsByArticleId)
 
 
 

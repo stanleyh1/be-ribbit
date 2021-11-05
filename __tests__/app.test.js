@@ -41,7 +41,7 @@ describe('/api/topics', () => {
 describe('/api/articles', () => { 
     describe('GET', () => {
         it('returns article by article id', () => {
-            const article_id = 1;
+            const article_id = 3;
             return request(app).get(`/api/articles/${article_id}`).expect(200).then(({ body }) => {
                 const { article } = body;
                 expect(article).toBeInstanceOf(Object);
@@ -66,10 +66,17 @@ describe('/api/articles', () => {
                     })
                 }) 
             })
-            test('status:404, responds with message Path not found for an invalid ID', () => {;
+            test('status:404, responds with message Path not found for an resource that does not exist', () => {;
                 return request(app).get(`/api/articles/99999999`).expect(404).then(({body}) => {
                     expect(body).toEqual({
                     "message": "Path not found"
+                    })
+                }) 
+            })
+            test('status:400, responds with message Bad Request for an invalid ID', () => {
+                return request(app).get(`/api/articles/notAnId`).expect(400).then(({body}) => {
+                    expect(body).toEqual({
+                    "message": "Bad Request"
                     })
                 }) 
             })
@@ -103,10 +110,17 @@ describe('/api/articles', () => {
                 })
             }) 
         })
-        test('status:404, responds with message Path not found for an invalid ID', () => {
+        test('status:404, responds with message Path not found for a resource that does not exist', () => {
             return request(app).get(`/api/articles/99999999999`).expect(404).then(({body}) => {
                 expect(body).toEqual({
                 "message": "Path not found"
+                })
+            }) 
+        })
+        test('status:400, responds with message Bad Request for an invalid ID', () => {;
+            return request(app).get(`/api/articles/notAnId`).expect(400).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Bad Request"
                 })
             }) 
         })
@@ -138,10 +152,17 @@ describe('/api/articles', () => {
                 })
             }) 
         })
-        test('status:404, responds with message Path not found for an invalid ID', () => {
+        test('status:404, responds with message Path not found for a resource that does not exist', () => {
             return request(app).get(`/api/articles/9999999/comments`).expect(404).then(({body}) => {
                 expect(body).toEqual({
                 "message": "Path not found"
+                })
+            }) 
+        })
+        test('status:400, responds with message Bad Request for an invalid ID', () => {;
+            return request(app).get(`/api/articles/notAnId`).expect(400).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Bad Request"
                 })
             }) 
         })
@@ -177,27 +198,6 @@ describe('/api/articles', () => {
             }) 
         })
     })
-    // describe('GET', () => {
-    //     it('returns all comments by article id', () => {
-    //         return request(app).get(`/api/articles/1/comments`).expect(200).then(({ body }) => {
-    //             const { comments }  = body;
-    //             expect(comments).toBeInstanceOf(Array);
-    //             expect(comments).toHaveLength(11);
-    //             comments.forEach((comment) => {
-    //             expect(comment).toEqual(
-    //             expect.objectContaining({
-    //             comment_id: expect.any(Number),
-    //             author: expect.any(String),
-    //             article_id: expect.any(Number),
-    //             votes: expect.any(Number),
-    //             created_at: expect.any(String),
-    //             body: expect.any(String)
-    //             }))
-    //         });
-    //         });
-    //     });
-    // });
-
 });
 
 describe('/api/comments', () => { 
@@ -212,8 +212,23 @@ describe('/api/comments', () => {
                 })
             }) 
         });
+        test('status:404, responds with message Path not found for a resource that does not exist', () => {
+            return request(app).get(`/api/comments/9999999`).expect(404).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Path not found"
+                })
+            }) 
+        })
+        test('status:400, responds with message Bad Request for an invalid ID', () => {;
+            return request(app).get(`/api/comments/notAnId`).expect(400).then(({body}) => {
+                expect(body).toEqual({
+                "message": "Bad Request"
+                })
+            }) 
+        });
     });
 });
+
 
 
 
