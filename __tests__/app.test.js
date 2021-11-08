@@ -39,8 +39,8 @@ describe('/api/topics', () => {
 })
 
 describe('/api/articles', () => { 
-    describe('GET', () => {
-        it('returns article by article id', () => {
+    describe.only('GET', () => {
+        test('returns article by article id', () => {
             const article_id = 3;
             return request(app).get(`/api/articles/${article_id}`).expect(200).then(({ body }) => {
                 const { article } = body;
@@ -66,17 +66,18 @@ describe('/api/articles', () => {
                     })
                 }) 
             })
-            test('status:404, responds with message Path not found for an resource that does not exist', () => {;
-                return request(app).get(`/api/articles/99999999`).expect(404).then(({body}) => {
+            test('status:404, responds with message Path not found for a resource that does not exist', () => {
+                return request(app).get(`/api/articles/99999999`).expect(404)
+                .then(({body}) => {
                     expect(body).toEqual({
-                    "message": "Path not found"
+                    "msg": "Resource not found"
                     })
                 }) 
             })
             test('status:400, responds with message Bad Request for an invalid ID', () => {
                 return request(app).get(`/api/articles/notAnId`).expect(400).then(({body}) => {
                     expect(body).toEqual({
-                    "message": "Bad Request"
+                    "msg": "Bad Request"
                     })
                 }) 
             })

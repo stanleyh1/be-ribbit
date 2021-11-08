@@ -1,6 +1,6 @@
 const express = require('express');
 const { getTopics, getArticlesById, updateArticle, postComment, getArticles, deleteComment } = require('./controllers/news.controllers.js');
-const { handleInvalidPaths, handleInvalidIds } = require('./errors/errors')
+const { handleSomeErrors, handlePsqlErrors } = require('./errors/errors')
 
 const app = express()
 
@@ -18,10 +18,8 @@ app.get('/api/articles', getArticles)
 
 app.delete('/api/comments/:comment_id', deleteComment)
 
-app.all('/*', handleInvalidPaths, handleInvalidIds)
+app.use(handleSomeErrors)
 
-
-
-
+app.use(handlePsqlErrors);
 
 module.exports = app;

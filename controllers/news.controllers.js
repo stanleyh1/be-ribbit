@@ -1,3 +1,4 @@
+const articles = require('../db/data/test-data/articles.js');
 const { fetchTopics, fetchArticlesById, updateArticleById, insertComment, fetchArticles, deleteCommentById } = require('../models/news.models.js')
 
 
