@@ -1,8 +1,18 @@
 const apiRouter = require('express').Router()
-const topicsRouter= require('./topics.route.js')
-
+const topicsRouter = require('./topics.route')
+const articlesRouter = require('./articles.route')
+const commentsRouter = require('./comments.route')
+const res = require('express/lib/response')
 
 apiRouter.use('/topics', topicsRouter)
+apiRouter.use('./articles', articlesRouter)
+apiRouter.use('./comments', commentsRouter)
+
+apiRouter.route('/')
+.get(( req, res, next) => {
+    res.send(endPoints)
+})
+.all(methodNotAllowed)
 
 
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getTopics, getArticlesById, updateArticle, postComment, getArticles, deleteComment } = require('./controllers/news.controllers.js');
+
 const { handleSomeErrors, handlePsqlErrors } = require('./errors/errors')
 
 const apiRouter = require('./routers/api.route.js')
@@ -9,18 +9,6 @@ const app = express()
 app.use(express.json());
 
 app.use('/api', apiRouter)
-
-// app.get('/api/topics', getTopics);
-
-// app.get('/api/articles/:article_id', getArticlesById)
-
-// app.patch('/api/articles/:article_id', updateArticle)
-
-// app.post('/api/articles/:article_id/comments', postComment)
-
-// app.get('/api/articles', getArticles)
-
-// app.delete('/api/comments/:comment_id', deleteComment)
 
 app.use(handleSomeErrors)
 
