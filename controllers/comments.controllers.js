@@ -1,21 +1,18 @@
-const articles = require('../db/data/test-data/articles');
-const { insertComment, deleteCommentById } = require('../models/comments.models')
-exports.postComment = (req, res, next) => {
-    
-    const newComment = req.body;
-    insertComment(newComment) 
-    .then((comment) => {
-        res.status(201).send({ comment })
-    })
-    .catch(next)
-    
+const { updateCommentById, removeCommentById } = require("../models/comments.models");
+
+exports.patchCommentById = (req, res, next) => {
+  const {comment_id} = req.params;
+  const { inc_votes} = req.body;
+updateCommentById(comment_id, inc_votes).then((comment)=>{
+  res.status(200).send({comment})
+}).catch(next)
 }
 
-exports.deleteComment = (req, res, next) => {
-    const { comment_id } = req.params;
-    deleteCommentById(comment_id)
+exports.deleteCommentByCommentId = (req, res, next) => {
+  const { comment_id } = req.params;
+  removeCommentById(comment_id)
     .then(() => {
-        res.sendStatus(204);
+      res.status(204).send();
     })
     .catch(next)
 };

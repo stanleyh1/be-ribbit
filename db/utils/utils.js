@@ -1,5 +1,3 @@
-
-
 const mapComments = (commentData) => { return commentData.map((comment) => {
     return [comment.author, comment.article_id, comment.votes || 0, comment.created_at, comment.body];
     })
@@ -20,4 +18,4 @@ const mapUsers = (userData) => { return userData.map((user) => {
     })
     }
 
-    module.exports = { mapTopics, mapUsers, mapArticles, mapComments} 
+module.exports = { mapTopics, mapUsers, mapArticles, mapComments }  
