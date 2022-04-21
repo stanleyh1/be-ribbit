@@ -102,6 +102,70 @@ describe("GET/api/articles", () => {
       });
   });
 });
+describe("POST/api/articles", () => {
+  test("status: 201 returns a newly created article", () => {
+    const article = {
+      author: "rogersop",
+      title: "frogs are amphibians",
+      body: "frog, any of various tailless amphibians belonging to the order Anura. Used strictly, the term may be limited to any member of the family Ranidae (true frogs), but more broadly the name frog is often used to distinguish the smooth-skinned, leaping anurans from squat, warty, hopping ones, which are called toads.",
+      topic: "mitch"
+    };
+    return request(app)
+      .post("/api/articles")
+      .send(article)
+      .expect(201)
+      .then((res) => {
+        expect(res.body.article).toBeInstanceOf(Object);
+        expect(res.body.article).toEqual({
+            article_id: expect.any(Number),
+            title: "frogs are amphibians",
+            body: "frog, any of various tailless amphibians belonging to the order Anura. Used strictly, the term may be limited to any member of the family Ranidae (true frogs), but more broadly the name frog is often used to distinguish the smooth-skinned, leaping anurans from squat, warty, hopping ones, which are called toads.",
+            votes: expect.any(Number),
+            topic: "mitch",
+            author: "rogersop",
+            created_at: expect.any(String),
+        });
+      });
+  });
+  test("status: 400 returns 'Invalid input' when an author does not exist", () => {
+    const article = {
+      title: "frogs are amphibians",
+      body: "frog, any of various tailless amphibians belonging to the order Anura. Used strictly, the term may be limited to any member of the family Ranidae (true frogs), but more broadly the name frog is often used to distinguish the smooth-skinned, leaping anurans from squat, warty, hopping ones, which are called toads.",
+      topic: "mitch"
+    };
+    return request(app)
+      .post("/api/articles")
+      .send(article)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.msg).toBe("Invalid input");
+      });
+  });
+  test("status: 400 returns 'Invalid input' when the topic does not exist", () => {
+    const article = {
+      author: "rogersop",
+      title: "frogs are amphibians",
+      body: "frog, any of various tailless amphibians belonging to the order Anura. Used strictly, the term may be limited to any member of the family Ranidae (true frogs), but more broadly the name frog is often used to distinguish the smooth-skinned, leaping anurans from squat, warty, hopping ones, which are called toads."
+    };
+    return request(app)
+      .post("/api/articles")
+      .send(article)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.msg).toEqual("Invalid input");
+      });
+  });
+  test('status: 400 returns "Invalid input" when an empty object is passed in as a request', () => {
+    const article = {};
+    return request(app)
+      .post("/api/articles")
+      .send(article)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.msg).toBe("Invalid input");
+      });
+  });
+});
 describe("GET/api/articles/:article_id", () => {
   test("status: 200 returns an article with the requested article id", () => {
     return request(app)

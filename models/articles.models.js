@@ -133,3 +133,18 @@ exports.removeArticleById = (article_id) => {
       }
     });
 };
+
+exports.addArticle = (author, topic, title, body) => {
+  return db.query(
+      `INSERT INTO articles
+  (author, topic, title, body)
+  VALUES ($1, $2, $3, $4)
+  RETURNING *;`,
+      [author, topic, title, body]
+    )
+    .then((res) => {
+      res;
+      console.log(res.rows)
+      return res.rows[0];
+    });
+};

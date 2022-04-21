@@ -38,15 +38,15 @@ const seed = (data) => {
       title VARCHAR NOT NULL,
       body TEXT NOT NULL,
       votes INT DEFAULT 0,
-      topic VARCHAR REFERENCES topics(slug),
-      author VARCHAR REFERENCES users(username),
+      topic VARCHAR REFERENCES topics(slug) NOT NULL,
+      author VARCHAR REFERENCES users(username) NOT NULL,
       created_at TIMESTAMP DEFAULT NOW()
     );`)
   })
   .then(() => {
     return db.query(`CREATE TABLE comments (
       comment_id SERIAL PRIMARY KEY,
-      author VARCHAR REFERENCES users(username),
+      author VARCHAR REFERENCES users(username) NOT NULL,
       article_id INT REFERENCES articles(article_id),
       votes INT DEFAULT 0,
       created_at TIMESTAMP DEFAULT NOW(),
