@@ -144,7 +144,6 @@ exports.addArticle = (author, topic, title, body) => {
     )
     .then((res) => {
       res;
-      console.log(res.rows)
       return res.rows[0];
     });
 };
