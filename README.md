@@ -2,7 +2,7 @@
 
 Welcome to Ribbit, an api for interacting with a reddit-style news site.
 
-Access to the hosted version: 
+Access to the hosted version: https://nc-news-hannah.herokuapp.com/
 
 
 Ribbit's api has the following endpoints:

@@ -1,0 +1,120 @@
+{
+    "GET /api": {
+      "description": "Responds with all the available endpoints of the api"
+    },
+    "GET /api/articles": {
+      "description": "Responds with an array of all articles",
+      "queries": ["author", "topic", "sort_by", "order"],
+      "exampleResponse": {
+        "articles": [
+          {
+            "title": "Seafood substitutions are increasing",
+            "topic": "cooking",
+            "author": "weegembump",
+            "body": "'SEAFOOD fraud is a serious global problem', begins a recent report from Oceana, an NGO. Reviewing over 200 studies in 55 countries, the report finds that one in five fish sold has been mislabelled. Although fish fraud is common early in the supply chain, most of it comes at the retail level. In 65% of cases, the motivation is economic—slippery restaurateurs frequently serve up cheaper fish than they advertise to cut costs. In America, Oceana has reported instances of tilapia being sold as the more expensive red snapper. Especially brazen fish criminals have invented new types of fish entirely. In Brazil, researchers were puzzled to find markets selling 'douradinha', ' non-existent species. Close inspection found that 60% of such fish were actually 'vulture' catfish, a relatively undesirable dish. Reports in America of catfish being substituted for more expensive fish date back to at least 2002; Oceana’s study suggests that the phenomenon is spreading.",
+            "created_at": 1527695953341
+          }
+        ]
+      }
+    },
+    "POST /api/articles": {
+      "description": "responds with an newly created article object",
+        "request body": { "author": "happyamy2016", "topic": "coding", "title": "Learning to Code 101", "body": "some stuff about coding"},
+        "exampleResponse": {
+          "article": {
+            "article_id": 10,
+            "title": "Learning to Code 101",
+            "body": "some stuff about coding",
+            "votes": 0,
+            "topic": "coding",
+            "author": "happyamy2016",
+            "created_at": "2020-11-07T06:03:00.000Z"
+          }
+        }
+      },
+    "GET /api/articles/:article_id": {
+      "description": "Responds with an article object with the article_id in the param",
+      "exampleResponse": {
+        "article": {
+          "title": "Seafood substitutions are increasing",
+          "topic": "cooking",
+          "author": "weegembump",
+          "body": "'SEAFOOD fraud is a serious global problem', begins a recent report from Oceana, an NGO. Reviewing over 200 studies in 55 countries, the report finds that one in five fish sold has been mislabelled. Although fish fraud is common early in the supply chain, most of it comes at the retail level. In 65% of cases, the motivation is economic—slippery restaurateurs frequently serve up cheaper fish than they advertise to cut costs. In America, Oceana has reported instances of tilapia being sold as the more expensive red snapper. Especially brazen fish criminals have invented new types of fish entirely. In Brazil, researchers were puzzled to find markets selling 'douradinha', ' non-existent species. Close inspection found that 60% of such fish were actually 'vulture' catfish, a relatively undesirable dish. Reports in America of catfish being substituted for more expensive fish date back to at least 2002; Oceana’s study suggests that the phenomenon is spreading.",
+          "votes": 0,
+          "created_at": "2020-11-07T06:03:00.000Z"
+        }
+      }
+    },
+    "PATCH /api/articles/:article_id": {
+    "description": "responds with an article object with an updated votes property",
+      "request body": { "votes": "1" },
+      "exampleResponse": {
+        "article": {
+          "title": "Seafood substitutions are increasing",
+          "topic": "cooking",
+          "author": "weegembump",
+          "body": "'SEAFOOD fraud is a serious global problem', begins a recent report from Oceana, an NGO. Reviewing over 200 studies in 55 countries, the report finds that one in five fish sold has been mislabelled. Although fish fraud is common early in the supply chain, most of it comes at the retail level. In 65% of cases, the motivation is economic—slippery restaurateurs frequently serve up cheaper fish than they advertise to cut costs. In America, Oceana has reported instances of tilapia being sold as the more expensive red snapper. Especially brazen fish criminals have invented new types of fish entirely. In Brazil, researchers were puzzled to find markets selling 'douradinha', ' non-existent species. Close inspection found that 60% of such fish were actually 'vulture' catfish, a relatively undesirable dish. Reports in America of catfish being substituted for more expensive fish date back to at least 2002; Oceana’s study suggests that the phenomenon is spreading.",
+          "votes": 1,
+          "created_at": "2020-11-07T06:03:00.000Z"
+        }
+      }
+    },
+    "DELETE /api/articles/:article_id": {
+      "description": "deletes article by article ID. status: 204",
+      "example response": {}
+    },
+    "GET /api/articles/:article_id/comments": {
+      "description": "Responds with an array of comments an article by the article_id",
+      "exampleResponse": {
+        "comments": [
+          {"comment_id": 19,
+            "author": "butter_bridge",
+              "article_id": 1,
+              "votes": 0,
+              "created_at": "2022-01-20T16:56:36.197Z",
+              "body": "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!"
+            }
+        ]
+      }
+    },
+    "POST /api/articles/:article_id/comments": {
+      "description": "Takes an object request comment and responds with a newly created comment",
+      "request body": {
+        "username": "butter_bridge",
+        "body": "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!"
+      },
+      "exampleResponse": {
+        "comment": {
+        "comment_id": 19,
+        "author": "butter_bridge",
+          "article_id": 1,
+          "votes": 0,
+          "created_at": "2022-01-20T16:56:36.197Z",
+          "body": "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!"
+        }
+      }
+    },
+    "DELETE /api/comments/:comment_id": {
+      "description": "deletes the comment by the comment id and responds with an empty object and status 204",
+      "exampleResponse": {}
+    },
+    "GET /api/topics": {
+      "description": "responds with an array of all topics",
+      "queries": [],
+      "exampleResponse": {
+        "topics": [{ "description": "Hey good looking, what you got cooking?", "slug": "cooking" }]
+      }
+    },
+    "GET /api/users": {
+      "description": "responds with an array of all users",
+      "queries": [],
+      "exampleResponse": {
+        "users": [{
+          "username" : "grumpy19",
+          "name": "Paul Grump",
+          "avatar_url":
+            "https://vignette.wikia.nocookie.net/mrmen/images/7/78/Mr-Grumpy-3A.PNG/revision/latest?cb=20170707233013"
+        }]
+      }
+    }
+  }
