@@ -5,36 +5,48 @@ Access to the hosted version: (insert link here)
 
 Ribbit's api has the following endpoints:
 
-/api
+/api:
+
 GET a list of all available endpoints
 
 
-/api/articles
-GET a list of all posted articles, which can be sorted by various properties.
+/api/articles:
+
+GET a list of all posted articles, which can be sorted by various properties
+
 POST a new article
 
 
-/api/articles/:article_id
+/api/articles/:article_id:
+
 GET individual article information
+
 PATCH in order to vote up or down for an article
+
 DELETE an article
 
 
-/api/articles/:article_id/comments
+/api/articles/:article_id/comments:
+
 GET a list of comments, which can be sorted by various properties
+
 POST a new comment to an individual article
 
 
-/api/comments/:comment_id
+/api/comments/:comment_id:
+
 PATCH in order to vote up or down for a particular comment
+
 DELETE a comment
 
 
-/api/topics
+/api/topics:
+
 GET a list of topics
 
 
-/api/users
+/api/users:
+
 GET a list of all users
 
 
