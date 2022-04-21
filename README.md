@@ -57,7 +57,7 @@ For testing:
 * jest
 * supertest
 
-###### Installation:
+#### Installation:
 
 First, make sure that you have node and postgreSQL installed on your system. If you are using ubuntu, postgreSQL should be installed by default.
 
@@ -72,7 +72,7 @@ Test suite
 Jest and Supertest: npm test
 
 
-###### Starting up the server:
+#### Starting up the server:
 
 Everything should now be ready for you to start up your server. Just type:
 
