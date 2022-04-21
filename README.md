@@ -1,42 +1,36 @@
 Welcome to Ribbit, an api for interacting with a reddit-style news site.
 
-Access to the hosted version: (insert link here)
+Access to the hosted version: https://git.heroku.com/nc-news-hannah.git
 
 
 Ribbit's api has the following endpoints:
 
 /api:
-
 GET a list of all available endpoints
 
 
 /api/articles:
 
 GET a list of all posted articles, which can be sorted by various properties
-
 POST a new article
 
 
 /api/articles/:article_id:
 
 GET individual article information
-
 PATCH in order to vote up or down for an article
-
 DELETE an article
 
 
 /api/articles/:article_id/comments:
 
 GET a list of comments, which can be sorted by various properties
-
 POST a new comment to an individual article
 
 
 /api/comments/:comment_id:
 
 PATCH in order to vote up or down for a particular comment
-
 DELETE a comment
 
 
@@ -52,17 +46,13 @@ GET a list of all users
 
 Ribbit is made with:
 
-
 postgreSQL
-
 node.js 
-
 express
 
 For testing:
 
 jest
-
 supertest
 
 Installation:
