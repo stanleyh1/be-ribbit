@@ -1,4 +1,4 @@
-## Welcome to Ribbit, an api for interacting with a reddit-style news site.##
+## Welcome to Ribbit, an api for interacting with a reddit-style news site.
 
 Access to the hosted version: https://git.heroku.com/nc-news-hannah.git
 
