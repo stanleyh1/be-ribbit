@@ -65,18 +65,20 @@ First, make sure that you have node and postgreSQL installed on your system. If 
 Next, clone the repo to your hard drive 
 
 
-You'll then need to install the various dependencies: npm i -D
+You'll then need to install the various dependencies: 
+```npm i -D```
 
 Test suite
 
-Jest and Supertest: npm test
+Jest and Supertest: 
+```npm test```
 
 
 #### Starting up the server:
 
 Everything should now be ready for you to start up your server. Just type:
 
-npm start
+```npm start```
 
 If all goes well, you should get the message
 
